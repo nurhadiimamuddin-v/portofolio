@@ -74,6 +74,9 @@ body {
   font-size: clamp(16px, 1.2vw, 19px);
   line-height: 1.6;
   font-weight: 400;
+}
+
+body {
   overflow-x: hidden;
 }
 
