@@ -1,21 +1,20 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import ScrollReveal from "./ScrollReveal";
-import gsap from "gsap";
 
 const projects = [
   {
     num: "01",
-    role: "Evolving Framework for Integrated Infrastructure Data",
-    name: "Efidi",
-    desc: "An Application for Data Management and Installation Official Reports of New Customers at PT Telkom Akses Malang Region.",
-    tech: ["PHP", "MySQL", "Bootstrap", "Python"],
-    image: "/images/efidi.png",
-    link: "https://efidi.montaklo.id/",
-    year: "2025",
-    bg: "#E0E0E0"
+    role: "A Digital Platform for News and Public Information",
+    name: "Omah Berita",
+    desc: "A modern digital news platform for local and national coverage.",
+    tech: ["React", "Next JS", "Tailwind CSS"],
+    image: "/images/omahberita.png",
+    link: "https://omahberita.com/",
+    year: "2026",
+    category: "News Portal",
   },
   {
     num: "02",
@@ -24,250 +23,123 @@ const projects = [
     desc: "A Web-Based Application for Monitoring, Managing, and Controlling Rooms and Occupants with Web-Enabled Access Control.",
     tech: ["PHP", "MySQL", "C++"],
     image: "/images/identia.png",
-    link: "https://identia.montaklo.id/",
-    year: "2024",
-    bg: "#555555"
+    link: "#",
+    year: "2026",
+    category: "Access Control",
   },
   {
     num: "03",
+    role: "A Unified System for Content Creation and Management",
+    name: "Omah Berita CMS",
+    desc: "A comprehensive content management system for digital publishing.",
+    tech: ["React", "Next JS", "Node.js"],
+    image: "/images/cms.png",
+    link: "https://omahberita.com/",
+    year: "2026",
+    category: "Web Application",
+  },
+  {
+    num: "04",
+    role: "Evolving Framework for Integrated Infrastructure Data",
+    name: "Efidi",
+    desc: "An Application for Data Management and Installation Official Reports of New Customers at PT Telkom Akses Malang Region.",
+    tech: ["PHP", "MySQL", "Bootstrap", "Python"],
+    image: "/images/efidiii.png",
+    link: "https://efidi.montaklo.id/",
+    year: "2025",
+    category: "Web Application",
+  },
+  {
+    num: "05",
     role: "Managing enterprise network integrity and data streams",
     name: "Montaklo",
     desc: "As the core master portal, Montaklo dynamically integrates various independent data monitoring websites",
     tech: ["React", "Next JS"],
-    image: "/images/montaklo.png",
+    image: "/images/montakloo.png",
     link: "https://montaklo.id/",
-    year: "2023",
-    bg: "#8C8C8C"
+    year: "2025",
+    category: "Master Portal",
+  },
+  {
+    num: "06",
+    role: "IoT-Based Smart Locker Management and Access Control System",
+    name: "i-LockGada",
+    desc: "A smart lock system integration for secure room access.",
+    tech: ["PHP", "MySQL", "C++", "IoT"],
+    image: "/images/i-lockgada.png",
+    link: "https://i-lockgada.vercel.app/",
+    year: "2024",
+    category: "Access Control",
   },
 ];
 
 export default function Works() {
-  const [hoveredProject, setHoveredProject] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const previewRef = useRef(null);
-  const sliderRef = useRef(null);
-  const itemsRef = useRef([]);
-
-  // Mouse tracking logic (exactly as before)
-  useEffect(() => {
-    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let delayedMouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let raf;
-
-    const onMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-
-    const animate = () => {
-      if (previewRef.current) {
-        delayedMouse.x += (mouse.x - delayedMouse.x) * 0.08;
-        delayedMouse.y += (mouse.y - delayedMouse.y) * 0.08;
-
-        gsap.set(previewRef.current, {
-          x: delayedMouse.x - 200, // Center the 400x400 box on mouse
-          y: delayedMouse.y - 200,
-        });
-      }
-      raf = requestAnimationFrame(animate);
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    raf = requestAnimationFrame(animate);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  // Intersection Observer to trigger active project on scroll!
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.dataset.index);
-            setActiveIndex(index);
-            setHoveredProject(projects[index]);
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: "-40% 0px -40% 0px", // Trigger near center
-        threshold: 0
-      }
-    );
-
-    // Second observer for the whole list container to know when to close the modal
-    const containerObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) {
-            setHoveredProject(null);
-          }
-        });
-      },
-      { rootMargin: "0px", threshold: 0 }
-    );
-
-    const currentItems = itemsRef.current;
-    currentItems.forEach((item) => {
-      if (item) observer.observe(item);
-    });
-    
-    const listContainer = document.querySelector(".works-list");
-    if (listContainer) containerObserver.observe(listContainer);
-
-    return () => {
-      currentItems.forEach((item) => {
-        if (item) observer.unobserve(item);
-      });
-      if (listContainer) containerObserver.unobserve(listContainer);
-    };
-  }, []);
-
-  // Show/Hide preview box
-  useEffect(() => {
-    if (hoveredProject) {
-      gsap.to(previewRef.current, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
-    } else {
-      gsap.to(previewRef.current, { opacity: 0, scale: 0.8, duration: 0.4, ease: "power2.out" });
-    }
-  }, [hoveredProject]);
-
-  // Slide to correct image
-  useEffect(() => {
-    if (sliderRef.current) {
-      gsap.to(sliderRef.current, {
-        yPercent: -activeIndex * 100,
-        duration: 0.5,
-        ease: "power3.inOut"
-      });
-    }
-  }, [activeIndex]);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   return (
-    <section className="section" id="works" style={{ backgroundColor: "#fff", paddingTop: "5em" }}>
-      <div className="container" onMouseLeave={() => setHoveredProject(null)}>
-        
+    <section className="works-section" id="works">
+      <div className="container">
+        {/* Section Header */}
         <ScrollReveal>
-          <div className="section-header">
-            <h2 className="section-label" style={{ borderBottom: "none", paddingBottom: 0, color: "rgba(28,29,32,0.6)" }}>Recent work</h2>
+          <div className="works-header">
+            <div className="works-header-left">
+              <h2 className="works-title">
+                Some of my
+                <br />
+                <span style={{ backgroundColor: "var(--color-blue)", color: "white", padding: "0 12px" }}>favorite</span> projects.
+              </h2>
+            </div>
+            {/* View All Projects button removed as per user request */}
           </div>
         </ScrollReveal>
 
-        <div className={`works-list ${hoveredProject ? "is-hovering" : ""}`}>
+        {/* Projects Grid */}
+        <div className="works-grid">
           {projects.map((project, i) => (
-            <div 
-              key={project.num}
-              ref={(el) => (itemsRef.current[i] = el)}
-              data-index={i}
-              style={{
-                borderTop: "1px solid var(--color-border)",
-                borderBottom: i === projects.length - 1 ? "1px solid var(--color-border)" : "none",
-                position: "relative"
-              }}
-            >
-              <ScrollReveal delay={i * 0.1}>
-                <a 
-                  href={project.link || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`work-item ${hoveredProject?.num === project.num ? "active" : ""}`}
-                  onMouseEnter={() => {
-                    setActiveIndex(i);
-                    setHoveredProject(project);
-                  }}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "4vw 0",
-                    transition: "opacity 0.4s ease, transform 0.4s ease",
-                    opacity: hoveredProject ? (hoveredProject.num === project.num ? 1 : 0.3) : 1,
-                    transform: hoveredProject && hoveredProject.num === project.num ? "translateX(20px)" : "translateX(0)",
-                    textDecoration: "none",
-                    color: "inherit"
-                  }}
-                >
-                  <h3 style={{ fontSize: "clamp(40px, 6vw, 100px)", fontWeight: 400, letterSpacing: "-0.03em", margin: 0, lineHeight: 1 }}>{project.name}</h3>
-                  <span style={{ fontSize: "16px", fontWeight: 400, textAlign: "right", maxWidth: "350px" }}>{project.role}</span>
-                </a>
-              </ScrollReveal>
-            </div>
-          ))}
-        </div>
-
-        {/* Floating Preview Modal (Layout & shape unchanged) */}
-        <div 
-          ref={previewRef}
-          style={{
-            position: "fixed",
-            top: 0, left: 0,
-            width: "400px", height: "400px",
-            pointerEvents: "none",
-            zIndex: 50,
-            opacity: 0,
-            transform: "scale(0.8)",
-            willChange: "transform",
-            overflow: "hidden", 
-          }}
-        >
-          {/* Vertical Slider Container */}
-          <div 
-            ref={sliderRef}
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              willChange: "transform"
-            }}
-          >
-            {projects.map((proj) => (
-              <div 
-                key={proj.num}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  flexShrink: 0, 
-                  backgroundColor: proj.bg,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
+            <ScrollReveal key={project.num} delay={i * 0.15}>
+              <a
+                href={project.link !== "#" ? project.link : undefined}
+                target={project.link !== "#" ? "_blank" : undefined}
+                rel={project.link !== "#" ? "noopener noreferrer" : undefined}
+                className="works-card"
+                style={{ 
+                  position: 'relative',
+                  cursor: project.link === "#" ? "default" : "pointer"
+                }}
+                onClick={(e) => {
+                  if (project.link === "#") e.preventDefault();
                 }}
               >
-                <div style={{
-                  position: "relative",
-                  width: "calc(100% - 120px)",
-                  aspectRatio: "16/9",
-                }}>
-                  <Image
-                    src={proj.image}
-                    alt={proj.name}
-                    fill
-                    style={{ objectFit: "contain" }}
-                    priority={false}
-                  />
+                {/* Card Image Area with CSS Gradient Background */}
+                <div className="works-card-image-wrapper">
+                  {/* Hover View Button */}
+                  <div className="works-card-arrow" style={{
+                    backgroundColor: project.link === "#" ? "rgba(69, 92, 233, 0.5)" : undefined,
+                  }}>
+                    View
+                  </div>
+                  {/* Project Screenshot */}
+                  <div className="works-card-image">
+                    <Image
+                      src={project.image}
+                      alt={project.name}
+                      fill
+                      style={{ objectFit: "contain" }}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          {/* View label */}
-          <div style={{
-            position: "absolute",
-            top: "50%", left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "80px", height: "80px",
-            backgroundColor: "var(--color-blue)",
-            borderRadius: "50%",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#fff", fontSize: "14px", fontWeight: 500, zIndex: 2
-          }}>
-            View
-          </div>
+
+                {/* Card Info */}
+                <div className="works-card-info" style={{ padding: '0.2em 0.15em 0', fontFamily: 'Inter, sans-serif', color: 'var(--color-dark)' }}>
+                  <p className="body-text-m" style={{ margin: '0 0 8px', color: 'rgba(28, 29, 32, 0.8)', fontWeight: 500, fontSize: '14px' }}>
+                    {project.name} - {project.year}
+                  </p>
+                  <h3 className="heading-h4" style={{ margin: 0, letterSpacing: '-0.01em', fontSize: 'clamp(18px, 1vw, 22px)' }}>{project.role}</h3>
+                </div>
+              </a>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>

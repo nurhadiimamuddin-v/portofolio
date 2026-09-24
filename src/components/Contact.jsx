@@ -51,8 +51,8 @@ export default function Contact() {
       className="contact-section"
       id="contact"
       style={{
-        backgroundColor: "#1C1D20",
-        color: "#fff",
+        backgroundColor: "transparent",
+        color: "#232323",
         paddingTop: "10em",
         paddingBottom: "2em",
       }}
@@ -76,8 +76,8 @@ export default function Contact() {
               >
                 <div
                   style={{
-                    width: "80px",
-                    height: "80px",
+                    width: "clamp(80px, 10vw, 140px)",
+                    height: "clamp(80px, 10vw, 140px)",
                     borderRadius: "50%",
                     overflow: "hidden",
                     position: "relative",
@@ -88,7 +88,7 @@ export default function Contact() {
                     src="/images/adi.png"
                     alt="Nur Hadi Imamuddin"
                     fill
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "cover", objectPosition: "center top" }}
                   />
                 </div>
                 <h2
@@ -100,7 +100,7 @@ export default function Contact() {
                     lineHeight: 1,
                   }}
                 >
-                  Let&apos;s work
+                  Let<span style={{ color: "var(--color-blue)" }}>&apos;</span>s work
                 </h2>
               </div>
               <h2
@@ -116,39 +116,12 @@ export default function Contact() {
               </h2>
             </ScrollReveal>
           </div>
-
-          <div style={{ paddingRight: "4vw" }}>
-            <Magnetic>
-              <div
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  (window.location.href = "mailto:nurhadiimamuddin@gmail.com")
-                }
-              >
-                <div
-                  style={{
-                    width: "clamp(140px, 14vw, 180px)",
-                    height: "clamp(140px, 14vw, 180px)",
-                    backgroundColor: "#455CE9",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#fff",
-                    fontSize: "16px",
-                  }}
-                >
-                  Get in touch
-                </div>
-              </div>
-            </Magnetic>
-          </div>
         </div>
 
         <div
           style={{
             marginTop: "100px",
-            borderTop: "1px solid rgba(255,255,255,0.2)",
+            borderTop: "1px solid rgba(0,0,0,0.2)",
             paddingTop: "40px",
             position: "relative",
           }}
@@ -173,7 +146,7 @@ export default function Contact() {
               >
                 <a
                   href="mailto:nurhadiimamuddin@gmail.com"
-                  className="nav-link-inline contact-link"
+                  className="nav-link-inline-dark contact-link"
                   style={{
                     fontSize: "clamp(18px, 1.5vw, 24px)",
                     textDecoration: "none",
@@ -187,7 +160,7 @@ export default function Contact() {
                   href="https://www.linkedin.com/in/nur-hadi-imamuddin-0b2b85377/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="nav-link-inline contact-link"
+                  className="nav-link-inline-dark contact-link"
                   style={{
                     fontSize: "clamp(18px, 1.5vw, 24px)",
                     textDecoration: "none",
@@ -201,7 +174,7 @@ export default function Contact() {
                   href="https://github.com/NurHadiImamuddin18/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="nav-link-inline contact-link"
+                  className="nav-link-inline-dark contact-link"
                   style={{
                     fontSize: "clamp(18px, 1.5vw, 24px)",
                     textDecoration: "none",
@@ -215,7 +188,7 @@ export default function Contact() {
                   href="https://www.instagram.com/hyadiv_/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="nav-link-inline contact-link"
+                  className="nav-link-inline-dark contact-link"
                   style={{
                     fontSize: "clamp(18px, 1.5vw, 24px)",
                     textDecoration: "none",
@@ -234,7 +207,14 @@ export default function Contact() {
                 style={{ maxWidth: "600px", marginLeft: "auto", width: "100%" }}
               >
                 <form onSubmit={handleSubmit}>
-                  <div className="input-group" style={{ borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: "15px", marginBottom: "30px" }}>
+                  <div
+                    className="input-group"
+                    style={{
+                      borderBottom: "1px solid rgba(0,0,0,0.2)",
+                      paddingBottom: "15px",
+                      marginBottom: "30px",
+                    }}
+                  >
                     <label style={{ display: "none" }} htmlFor="name">
                       Name
                     </label>
@@ -246,9 +226,17 @@ export default function Contact() {
                       placeholder="Your Name"
                       value={formData.name}
                       onChange={handleChange}
+                      suppressHydrationWarning
                     />
                   </div>
-                  <div className="input-group" style={{ borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: "15px", marginBottom: "30px" }}>
+                  <div
+                    className="input-group"
+                    style={{
+                      borderBottom: "1px solid rgba(0,0,0,0.2)",
+                      paddingBottom: "15px",
+                      marginBottom: "30px",
+                    }}
+                  >
                     <label style={{ display: "none" }} htmlFor="email">
                       Email
                     </label>
@@ -256,14 +244,21 @@ export default function Contact() {
                       type="email"
                       id="email"
                       name="email"
-                      required
                       placeholder="Your Email"
                       value={formData.email}
                       onChange={handleChange}
+                      suppressHydrationWarning
                     />
                   </div>
 
-                  <div className="input-group" style={{ borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: "15px", marginBottom: "30px" }}>
+                  <div
+                    className="input-group"
+                    style={{
+                      borderBottom: "1px solid rgba(0,0,0,0.2)",
+                      paddingBottom: "15px",
+                      marginBottom: "30px",
+                    }}
+                  >
                     <label style={{ display: "none" }} htmlFor="message">
                       Message
                     </label>
@@ -275,6 +270,7 @@ export default function Contact() {
                       rows="2"
                       value={formData.message}
                       onChange={handleChange}
+                      suppressHydrationWarning
                     />
                   </div>
 
@@ -291,15 +287,16 @@ export default function Contact() {
                       <button
                         type="submit"
                         disabled={status === "loading"}
+                        suppressHydrationWarning
                         style={{
                           padding: "18px 40px",
                           borderRadius: "50px",
                           border: "none",
                           backgroundColor:
                             status === "loading"
-                              ? "rgba(255,255,255,0.6)"
-                              : "#fff",
-                          color: "#1C1D20",
+                              ? "rgba(0,0,0,0.6)"
+                              : "#232323",
+                          color: "#fff",
                           fontSize: "16px",
                           fontWeight: 500,
                           cursor:
@@ -324,7 +321,7 @@ export default function Contact() {
                                 cx="12"
                                 cy="12"
                                 r="10"
-                                stroke="#1C1D20"
+                                stroke="#fff"
                                 strokeWidth="2"
                                 strokeDasharray="31.4"
                                 strokeDashoffset="10"
