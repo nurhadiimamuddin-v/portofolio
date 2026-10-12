@@ -116,7 +116,9 @@ export default function Hero() {
     scene.fog = new THREE.Fog("#ffffff", 1, 3);
     scene.background = new THREE.Color("#ffffff");
 
-    const geometry = new THREE.PlaneGeometry(12, 12, 512, 512);
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const segments = isMobile ? 64 : 256;
+    const geometry = new THREE.PlaneGeometry(12, 12, segments, segments);
 
     const vertexShader = `
         uniform float uTime;
@@ -277,24 +279,37 @@ export default function Hero() {
     camera.lookAt(0, 0, 0);
     scene.add(camera);
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas: canvas, 
+      alpha: true,
+      powerPreference: "high-performance"
+    });
     renderer.setSize(1800, 800);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
 
     const clock = new THREE.Clock();
     let animationFrameId;
+    let isVisible = true;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    });
+    observer.observe(canvas);
 
     function animate() {
+      animationFrameId = window.requestAnimationFrame(animate);
+      if (!isVisible) return;
+
       const elapsedTime = clock.getElapsedTime();
       if (uniforms.uTime) {
         uniforms.uTime.value = elapsedTime;
       }
       renderer.render(scene, camera);
-      animationFrameId = window.requestAnimationFrame(animate);
     }
     animate();
 
     return () => {
+      observer.disconnect();
       window.cancelAnimationFrame(animationFrameId);
       scene.remove(mesh);
       geometry.dispose();
