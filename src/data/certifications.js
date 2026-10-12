@@ -1,9 +1,17 @@
 export const certifications = [
   {
+    id: 4,
+    year: "2026",
+    title: "Associate Administrator Network",
+    org: "Indonesian Professional Certification Authority (BNSP). Valid: September 2026 - 2029. Credential ID: 62090 2522 5 15043 2026",
+    image: "/images/04.jpg",
+    pdf: "/images/04.jpg"
+  },
+  {
     id: 1,
     year: "2025",
     title: "Junior Cyber Security",
-    org: "Indonesian Professional Certification Authority (BNSP). Valid: July 2025 - 2028. Credential ID: TIK 1565 31199 2025",
+    org: "Indonesian Professional Certification Authority (BNSP). Valid: July 2025 - 2028. Credential ID: 62021 2529 2 0146510 2025",
     image: "/images/01.png",
     pdf: "/pdf/01.pdf"
   },
