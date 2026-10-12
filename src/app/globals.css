@@ -57,10 +57,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 html,
 body {
   width: 100%;
@@ -74,9 +70,6 @@ body {
   font-size: clamp(16px, 1.2vw, 19px);
   line-height: 1.6;
   font-weight: 400;
-}
-
-body {
   overflow-x: hidden;
 }
 
@@ -815,6 +808,9 @@ ul {
   }
 }
 @media (max-width: 768px) {
+  :root {
+    --container-padding: clamp(16px, 5vw, 24px);
+  }
   .custom-cursor {
     display: none !important;
   }
@@ -828,6 +824,32 @@ ul {
   }
   .fixed-nav {
     width: 100%;
+  }
+  .contact-layout {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  .edu-grid-responsive {
+    grid-template-columns: 1fr !important;
+  }
+  .cert-grid-responsive {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .cert-card-responsive {
+    height: auto !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .cert-card-responsive > div:first-child {
+    width: 100% !important;
+    height: 160px !important;
+  }
+  .edu-grid-responsive > div {
+    flex-direction: column !important;
+    align-items: flex-start !important;
   }
 }
 

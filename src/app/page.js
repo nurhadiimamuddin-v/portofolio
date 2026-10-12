@@ -22,6 +22,7 @@ export default function Home() {
           position: "relative",
           zIndex: 2,
           backgroundColor: "var(--color-light)",
+          overflowX: "hidden",
         }}
       >
         <Navbar />

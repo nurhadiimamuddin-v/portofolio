@@ -14,10 +14,9 @@ export default function SmoothScroll({ children }) {
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Inertia damping curve
         orientation: "vertical",
-        gestureOrientation: "vertical",
         smoothWheel: true,
         wheelMultiplier: 1.05,
-        touchMultiplier: 1.5,
+        syncTouch: true,
         infinite: false,
       }}
     >
