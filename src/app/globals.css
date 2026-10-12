@@ -65,7 +65,7 @@ html,
 body {
   width: 100%;
   -webkit-font-smoothing: antialiased;
-  background-color: var(--color-gray);
+  background-color: #ffffff;
   color: var(--color-text);
   font-family:
     "Neue Montreal",
